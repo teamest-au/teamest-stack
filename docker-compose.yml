@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 8080:15672
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: scraper
+      RABBITMQ_DEFAULT_PASS: scraper
+  scraper-worker:
+    image: teamest/scraper-worker
+    volumes:
+      - "./config.json:/usr/config/config.json"
+    environment:
+      RABBIT_MQ_HOST: rabbitmq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USER: scraper
+      RABBIT_MQ_PASS: scraper
+      RABBIT_MQ_EXCHANGE: scraped_seasons
+      LOG_LEVEL: info
