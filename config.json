@@ -8,6 +8,15 @@
         "timezone": "Australia/Adelaide",
         "matchDuration": 60
       }
+    },
+    {
+      "url": "https://www.volleyballsa.com.au/social/indoor/fixtures",
+      "scraperName": "volleyball-sa",
+      "options": {
+        "competitionName": "Volleyball SA Indoor",
+        "timezone": "Australia/Adelaide",
+        "matchDuration": 60
+      }
     }
   ]
 }
