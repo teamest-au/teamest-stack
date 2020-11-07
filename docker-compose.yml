@@ -35,6 +35,7 @@ services:
     image: teamest/internal-season-api
     environment:
       PORT: 9010
+      HEALTH_PORT: 9011
       MYSQL_HOST: mysql
       MYSQL_USER: internal_season
       MYSQL_PASS: internal_season
