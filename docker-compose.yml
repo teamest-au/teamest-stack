@@ -20,7 +20,7 @@ services:
       - ./migrations/bootstrap:/docker-entrypoint-initdb.d
 
   scraper-worker:
-    image: teamest/scraper-worker
+    image: teamest/scraper-worker:v0.6.0-node14.0
     volumes:
       - "./config.json:/usr/config/config.json"
     environment:
@@ -53,4 +53,19 @@ services:
       RABBIT_MQ_READ_QUEUE: season_data_worker__scraped_seasons
       RABBIT_MQ_WRITE_EXCHANGE: changed_season_teams
       INTERNAL_SEASON_URL: http://internal-season-api:9010
+      LOG_LEVEL: info
+
+  calendar-generator-worker:
+    image: teamest/calendar-generator-worker
+    environment:
+      RABBIT_MQ_HOST: rabbitmq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USER: scraper
+      RABBIT_MQ_PASS: scraper
+      RABBIT_MQ_SEASON_EXCHANGE: changed_seasons
+      RABBIT_MQ_SEASON_QUEUE: calendar_generator_worker__changed_seasons
+      RABBIT_MQ_USER_EXCHANGE: changed_users
+      RABBIT_MQ_USER_QUEUE: calendar_generator_worker__changed_users
+      INTERNAL_SEASON_API_URL: http://internal-season-api:9010
+      CALENDAR_S3_BUCKET: vcalendars-dev.demery.com.au
       LOG_LEVEL: info
